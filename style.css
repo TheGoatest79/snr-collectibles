@@ -83,8 +83,10 @@ nav.main-nav a:hover, nav.main-nav a.active { background: #241b0d; color: var(--
   text-decoration: none; border: 2px solid var(--orange-deep);
 }
 .btn:hover { background: linear-gradient(135deg, #f5cd5e, #ef8f3d); }
-.btn.ghost { background: transparent; color: var(--gold); border-color: var(--gold-deep); }
-.btn.ghost:hover { background: rgba(224,123,46,.14); color: var(--orange); border-color: var(--orange); }
+.btn.ghost { background: transparent; color: var(--orange-bright); border-color: var(--orange); }
+.btn.ghost:hover { background: rgba(224,123,46,.18); color: #fff; border-color: var(--orange-bright); }
+.btn.ghost.blue { color: var(--blue-light); border-color: var(--blue); }
+.btn.ghost.blue:hover { background: rgba(58,134,255,.16); color: #fff; border-color: var(--blue-light); }
 .btn:disabled, .btn.disabled { opacity: .45; cursor: not-allowed; }
 
 /* Sections */
