@@ -1,0 +1,18 @@
+S&R's Cards, Comics & Coins OH-MY! — Certificate of Authenticity
+
+This certifies that the digital artwork "Auroraca" (a graceful crystalline ice fox with an aurora shimmering in its tail) is an authentic
+S&R original release — 100% original creature design, no third-party IP.
+
+  Certificate №:  SNR-DIG-00010
+  Edition:        1 of 5  (limited edition — five copies will ever be issued)
+  Artwork file:   assets/cards/auroraca.webp
+  SHA-256:        2cbf7c12b1b28f1b8b09c174ee85d63f447f8557e7698ac51fb84241ceb7445e
+  Artist:         Renix Jones / S&R Collectibles (original AI-assisted digital art)
+  Released:       2026-10-08
+  List price:     $20.00
+
+Verified by Sam & Ryan. This certificate travels with the artwork — keep it.
+It's what proves yours is real.
+
+HOW TO VERIFY: hash the artwork file with SHA-256 (any free tool) and compare
+it to the value above. A match proves the file is the certified original.
