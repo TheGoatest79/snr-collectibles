@@ -1,0 +1,18 @@
+S&R's Cards, Comics & Coins OH-MY! — Certificate of Authenticity
+
+This certifies that the digital artwork "Embercub" (a fierce fire lion cub with a mane of living flames) is an authentic
+S&R original release — 100% original creature design, no third-party IP.
+
+  Certificate №:  SNR-DIG-00006
+  Edition:        1 of 5  (limited edition — five copies will ever be issued)
+  Artwork file:   assets/cards/embercub.webp
+  SHA-256:        b6a2efe5eddad19491b73b3e21b745f61773e91b8aa7a575cf9df714f52ccb0a
+  Artist:         Renix Jones / S&R Collectibles (original AI-assisted digital art)
+  Released:       2026-10-08
+  List price:     $20.00
+
+Verified by Sam & Ryan. This certificate travels with the artwork — keep it.
+It's what proves yours is real.
+
+HOW TO VERIFY: hash the artwork file with SHA-256 (any free tool) and compare
+it to the value above. A match proves the file is the certified original.
