@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sell With Us — S&R's Cards, Comics and Coins Oh-My!</title>
+<meta name="description" content="List up to 4 items at a time in the S&R vault, or let us sell for you with consignment.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/logo-snr.png" alt="S and R's Cards, Comics and Coins Oh My logo">
+      <span class="brand-name">S&amp;R's Cards, Comics &amp; Coins<small>OH-MY!</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">☰</button>
+    <nav class="main-nav"><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">The Cabinet</a></li>
+      <li class="nav-cat"><a href="shop.html?type=trading-card">Cards</a></li>
+      <li class="nav-cat"><a href="shop.html?type=comic">Comics</a></li>
+      <li class="nav-cat"><a href="shop.html?type=coin">Coins</a></li>
+      <li class="nav-cat"><a href="shop.html?type=currency">Paper Money</a></li>
+      <li class="nav-cat"><a href="shop.html?type=collectible">Collectibles</a></li>
+      <li class="nav-cat"><a href="shop.html?type=antique">Antiques</a></li>
+      <li><a href="digital.html">Digital</a></li>
+      <li><a href="budget.html">Budget Bin</a></li>
+      <li><a href="consignment.html">Consignment</a></li>
+      <li><a href="auctions.html">Auctions</a></li>
+      <li><a href="sell.html" class="active">Sell</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <h1>🤝 Sell With Us</h1>
+    <p>Your grails, our audience. List your own finds in the vault — or hand them to Sam &amp; Ryan and let us do the selling.</p>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <div class="section-head"><h2>Two ways to sell</h2></div>
+    <div class="feature-row">
+      <div class="feature">
+        <h3>📋 List it yourself</h3>
+        <p><strong>Up to 4 items at a time, per seller.</strong> The cap keeps the vault curated — quality over quantity. Snap your photos, write an honest description, set your price, and your finds go live for every collector browsing the shop.</p>
+        <p style="margin-top:10px"><strong>One flat 9% fee when it sells.</strong> No monthly subscription, no listing fees — list free, we take 9% only when your item sells. (eBay takes ~13%. Just saying.)</p>
+        <p style="margin-top:10px; font-size:.85rem; color:var(--muted)">Seller accounts are open — sign up below and list your first item in minutes.</p>
+      </div>
+      <div class="feature">
+        <h3>📦 Consignment</h3>
+        <p>Don't want the hassle? Ship your items to S&amp;R and <strong>we sell them for you</strong> — professional photos, honest grading with our <a href="grading.html">AI-assisted grader</a>, listing, packing, and shipping handled start to finish. You get paid when it sells, minus an agreed consignment cut.</p>
+        <p style="margin-top:10px; font-size:.85rem; color:var(--muted)">Consignment terms and revenue split will be posted here before we go live.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block alt">
+  <div class="wrap">
+    <div class="section-head"><h2>How listing works</h2></div>
+    <div class="steps">
+      <div class="step"><h3>Make your profile</h3><p>Sign up free and create your seller profile — your shop name, a blurb, your avatar. Like eBay: you're selling in minutes, not waiting on approval.</p></div>
+      <div class="step"><h3>List (max 4)</h3><p>Photograph your items, describe condition honestly, set your price. Four live listings at a time keeps things curated.</p></div>
+      <div class="step"><h3>Get graded</h3><p>Run your cards, comics, or coins through our <a href="grading.html">AI grading assistant</a> for a pre-grade estimate buyers can trust — sellers get one flat rate.</p></div>
+      <div class="step"><h3>Sell &amp; ship</h3><p>Buyers check out securely. You pack and ship — or upgrade any sale to consignment and we handle it. We take a flat 9% when it sells. That's it.</p></div>
+    </div>
+    <div class="todo-note" style="margin-top:24px">📝 <strong>TO-DO (Ryan):</strong> finalize seller fees, consignment revenue split, and intake address before launch.</div>
+    <div class="cta-row" style="margin-top:8px">
+      <a class="btn" href="#sr-auth">Open a Seller Account</a>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="sr-seller-desk">
+  <div class="wrap">
+    <div class="section-head"><h2>🏪 Your seller desk</h2></div>
+    <p class="lede">Sign in, list up to 4 items, manage what's live. Photos upload straight to the shop.</p>
+    <div id="sr-auth"></div>
+    <div id="sr-listing" style="display:none;margin-top:24px"></div>
+    <div id="sr-my-listings" style="display:none"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><h4>Shop</h4><ul>
+        <li><a href="shop.html">The Cabinet</a></li>
+        <li><a href="digital.html">Digital Terminal</a></li>
+        <li><a href="budget.html">Budget Bin ($1–$5)</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+        <li><a href="sell.html">Sell With Us</a></li>
+      </ul></div>
+      <div><h4>Services</h4><ul>
+        <li><a href="grading.html">AI-Assisted Grading</a></li>
+        <li><a href="sell.html">We Buy, Sell & Trade</a></li>
+        <li><a href="auctions.html">30-Minute Auctions</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+      </ul></div>
+      <div><h4>S&amp;R</h4><ul>
+        <li><a href="about.html">About Sam &amp; Ryan</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html">Staff Login</a></li>
+      </ul></div>
+    </div>
+    <p class="fineprint">© 2026 S&amp;R's Cards, Comics and Coins Oh-My! — Sam &amp; Ryan. Cards. Comics. Coins. Collectibles. Digital Finds. Oh-My!</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/store.js"></script>
+  <script src="js/auth-direct.js"></script>
+<script src="js/sell.js"></script>
+<script>SR.initSell();</script>
+</body>
+</html>
