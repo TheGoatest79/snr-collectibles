@@ -1,0 +1,126 @@
+{
+  "issued": "2026-10-07",
+  "issuer": "S&R Collectibles \u2014 S&R's Cards, Comics and Coins Oh-My!",
+  "note": "Each record certifies the master artwork file by SHA-256. A buyer verifies by hashing their downloaded file and comparing. For 1-of-5 editions, individual copy numbers (e.g. SNR-DIG-00003-2) are assigned at sale time and recorded here.",
+  "pieces": [
+    {
+      "artist": "Renix Jones / S&R Collectibles",
+      "cert": "SNR-DIG-00001",
+      "edition": "1 of 1",
+      "edition_type": "1-of-1 original",
+      "file": "assets/digital/vault-guardian.webp",
+      "list_price_usd": 49.0,
+      "released": "2026-10-07",
+      "sha256": "41a0a013d9e499056c7222dd26d8c7a9db7407094fc560586438a7dc809046f6",
+      "title": "Vault Guardian"
+    },
+    {
+      "artist": "Renix Jones / S&R Collectibles",
+      "cert": "SNR-DIG-00002",
+      "edition": "1 of 1",
+      "edition_type": "1-of-1 original",
+      "file": "assets/digital/mint-state.webp",
+      "list_price_usd": 39.0,
+      "released": "2026-10-07",
+      "sha256": "e53abab3b594d24a6f4a5b4e17e749ae0d4f1ff5cfc91d2a55b1f13efb527d3a",
+      "title": "Mint State"
+    },
+    {
+      "artist": "Renix Jones / S&R Collectibles",
+      "cert": "SNR-DIG-00003",
+      "copies": [],
+      "edition": "1 of 5",
+      "edition_type": "limited edition",
+      "file": "assets/digital/copper-age-relic.webp",
+      "list_price_usd": 19.0,
+      "released": "2026-10-07",
+      "sha256": "cf98a36ec4cc5768cb2347ecabee59c66c5176da32d2565d57cf851286480f3b",
+      "title": "Copper Age Relic"
+    },
+    {
+      "artist": "Renix Jones / S&R Collectibles",
+      "cert": "SNR-DIG-00004",
+      "copies": [],
+      "edition": "1 of 5",
+      "edition_type": "limited edition",
+      "file": "assets/digital/oh-my-burst.webp",
+      "list_price_usd": 15.0,
+      "released": "2026-10-07",
+      "sha256": "bd545bd93e491cd900e4e49553d10b921460d8c5abfe4738baf7037a24965cbc",
+      "title": "The Oh-My! Burst"
+    },
+    {
+      "artist": "Renix Jones / S&R Collectibles",
+      "cert": "SNR-DIG-00005",
+      "copies": [],
+      "edition": "1 of 5",
+      "edition_type": "limited edition",
+      "file": "assets/digital/bronze-vault.webp",
+      "list_price_usd": 15.0,
+      "released": "2026-10-07",
+      "sha256": "961b0d9e4b2782e21e4c8b8ada5a10adc382bd726518a1d208ce4a3e0ea51c20",
+      "title": "Bronze Vault"
+    },
+    {
+      "cert": "SNR-DIG-00006",
+      "title": "Embercub",
+      "file": "assets/cards/embercub.webp",
+      "sha256": "b6a2efe5eddad19491b73b3e21b745f61773e91b8aa7a575cf9df714f52ccb0a",
+      "edition": "1 of 5",
+      "edition_type": "limited edition",
+      "copies": [],
+      "artist": "Renix Jones / S&R Collectibles",
+      "released": "2026-10-08",
+      "list_price_usd": 20.0
+    },
+    {
+      "cert": "SNR-DIG-00007",
+      "title": "Voltfin",
+      "file": "assets/cards/voltfin.webp",
+      "sha256": "3368437d8f65b47bac8dd788f60f0191602b7a408649cbbb517584ba33f27705",
+      "edition": "1 of 5",
+      "edition_type": "limited edition",
+      "copies": [],
+      "artist": "Renix Jones / S&R Collectibles",
+      "released": "2026-10-08",
+      "list_price_usd": 20.0
+    },
+    {
+      "cert": "SNR-DIG-00008",
+      "title": "Mossgolem",
+      "file": "assets/cards/mossgolem.webp",
+      "sha256": "cb270c16292f77ee67e7a7428786380292791c12061fbc2c6119f8edd9465bfc",
+      "edition": "1 of 5",
+      "edition_type": "limited edition",
+      "copies": [],
+      "artist": "Renix Jones / S&R Collectibles",
+      "released": "2026-10-08",
+      "list_price_usd": 20.0
+    },
+    {
+      "cert": "SNR-DIG-00009",
+      "title": "Gloomwing",
+      "file": "assets/cards/gloomwing.webp",
+      "sha256": "75ac346a9e5dd0aaa65b2d66711bc36948bad4fd69fc988aa0a0e57915645994",
+      "edition": "1 of 5",
+      "edition_type": "limited edition",
+      "copies": [],
+      "artist": "Renix Jones / S&R Collectibles",
+      "released": "2026-10-08",
+      "list_price_usd": 20.0
+    },
+    {
+      "cert": "SNR-DIG-00010",
+      "title": "Auroraca",
+      "file": "assets/cards/auroraca.webp",
+      "sha256": "2cbf7c12b1b28f1b8b09c174ee85d63f447f8557e7698ac51fb84241ceb7445e",
+      "edition": "1 of 5",
+      "edition_type": "limited edition",
+      "copies": [],
+      "artist": "Renix Jones / S&R Collectibles",
+      "released": "2026-10-08",
+      "list_price_usd": 20.0
+    }
+  ],
+  "registry": "Digital Terminal edition registry"
+}
