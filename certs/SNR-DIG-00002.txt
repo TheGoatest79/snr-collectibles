@@ -1,0 +1,17 @@
+S&R's Cards, Comics & Coins OH-MY! — Certificate of Authenticity
+
+This certifies that the digital artwork "Mint State" is an authentic S&R release.
+
+  Certificate №:  SNR-DIG-00002
+  Edition:        1 of 1  (1-of-1 original — no other copies will ever be issued)
+  Artwork file:   assets/digital/mint-state.webp
+  SHA-256:        e53abab3b594d24a6f4a5b4e17e749ae0d4f1ff5cfc91d2a55b1f13efb527d3a
+  Artist:         Renix Jones / S&R Collectibles (original AI-assisted digital art)
+  Released:       2026-10-07
+  List price:     $39.00
+
+Verified by Sam & Ryan. This certificate travels with the artwork — keep it.
+It's what proves yours is real.
+
+HOW TO VERIFY: hash the artwork file with SHA-256 (any free tool) and compare
+it to the value above. A match proves the file is the certified original.
