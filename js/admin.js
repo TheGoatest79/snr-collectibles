@@ -68,6 +68,7 @@
         '<button class="btn ghost" data-tab="grading">🤖 Grading queue</button>' +
         '<button class="btn ghost" data-tab="sellers">👥 Sellers</button>' +
         '<button class="btn ghost" data-tab="pricing">💲 Pricing</button>' +
+        '<button class="btn ghost" data-tab="notes">📝 Notes for Cog</button>' +
         '<button class="btn ghost" id="sr-ad-out" style="margin-left:auto">Sign out</button></div>' +
         '<div id="sr-ad-body"></div>';
       document.getElementById("sr-ad-out").onclick = SR.signOutDirect;
@@ -76,7 +77,7 @@
         b.onclick = function () {
           dash.querySelectorAll("[data-tab]").forEach(function (x) { x.className = "btn ghost"; });
           b.className = "btn";
-          ({ products: tabProducts, auctions: tabAuctions, grading: tabGrading, sellers: tabSellers, pricing: tabPricing })[b.getAttribute("data-tab")](body);
+          ({ products: tabProducts, auctions: tabAuctions, grading: tabGrading, sellers: tabSellers, pricing: tabPricing, notes: tabNotes })[b.getAttribute("data-tab")](body);
         };
       });
       tabProducts(body);
@@ -269,6 +270,55 @@
       body.innerHTML =
         "<h3>👥 Sellers (" + (res.data || []).length + ")</h3>" +
         (rows.length ? table(rows, ["Display name", "Joined"]) : "<p>No sellers yet.</p>");
+    }
+
+    /* ---- notes for cog ------------------------------------------------------ */
+    async function tabNotes(body) {
+      var sb = SR.dbDirect();
+      var me = await SR.getUserDirect();
+      var author = me && me.email ? me.email : "staff";
+      body.innerHTML =
+        "<h3>📝 Notes for Cog</h3>" +
+        '<p style="color:var(--muted);font-size:.9rem">Leave directions for Cog (Store Manager). He checks this inbox regularly, does the work, and writes back here.</p>' +
+        '<div class="form-card" style="margin-bottom:24px">' +
+        "<label>Your note *</label>" +
+        '<textarea id="sr-note-text" rows="3" style="width:100%;box-sizing:border-box" placeholder="e.g. Add a new product: Charizard poster, $20…"></textarea>' +
+        '<div style="margin-top:14px"><button class="btn" id="sr-note-go">Send to Cog</button></div>' +
+        '<div id="sr-note-msg"></div></div>' +
+        '<div id="sr-note-list"><p>Loading notes…</p></div>';
+
+      document.getElementById("sr-note-go").onclick = async function () {
+        var msg = document.getElementById("sr-note-msg");
+        var text = document.getElementById("sr-note-text").value.trim();
+        if (!text) { SR.note(msg, "Write the note first.", "err"); return; }
+        var ins = await sb.from("cog_notes").insert({ author: author, note: text });
+        if (ins.error) { SR.note(msg, "⚠️ " + SR.esc(ins.error.message), "err"); return; }
+        SR.note(msg, "✅ Sent. Cog will reply here.", "ok");
+        document.getElementById("sr-note-text").value = "";
+        loadNotes();
+      };
+
+      async function loadNotes() {
+        var list = document.getElementById("sr-note-list");
+        var res = await sb.from("cog_notes").select("*").order("created_at", { ascending: false }).limit(50);
+        if (res.error) { list.innerHTML = "<p>⚠️ " + SR.esc(res.error.message) + "</p>"; return; }
+        var notes = res.data || [];
+        if (!notes.length) { list.innerHTML = "<p>No notes yet. Leave the first one above.</p>"; return; }
+        list.innerHTML = notes.map(function (n) {
+          return '<div class="form-card" style="margin-bottom:12px">' +
+            '<p style="font-size:.8rem;color:var(--muted)">' + SR.esc(n.author) + " · " + new Date(n.created_at).toLocaleString() +
+            ' · <strong>' + SR.esc(n.status) + "</strong></p>" +
+            '<p style="white-space:pre-wrap">' + SR.esc(n.note) + "</p>" +
+            (n.reply
+              ? '<div style="margin-top:10px;padding:10px;border-left:3px solid var(--gold)"><strong>🤖 Cog:</strong>' +
+                '<p style="white-space:pre-wrap;margin:6px 0 0">' + SR.esc(n.reply) + "</p>" +
+                (n.replied_at ? '<p style="font-size:.78rem;color:var(--muted)">' + new Date(n.replied_at).toLocaleString() + "</p>" : "") +
+                "</div>"
+              : "") +
+            "</div>";
+        }).join("");
+      }
+      loadNotes();
     }
   };
 })();
