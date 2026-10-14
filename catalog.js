@@ -6,7 +6,7 @@
    media: "physical" | "digital"
 */
 const PRODUCTS = [
-  // --- Digital Terminal: authenticated digital collectibles (live 2026-10-07) ---
+  // --- Digital Dungeon: authenticated digital collectibles (live 2026-10-07) ---
   { name: "Vault Guardian — 1-of-1", price: 49.00, type: "digital-art", condition: "digital", conditionLabel: "1-of-1 Original", media: "digital", category: "digital", badge: "1-of-1", img: "assets/digital/vault-guardian.webp", cert: "SNR-DIG-00001", edition: "1 of 1" },
   { name: "Mint State — 1-of-1", price: 39.00, type: "digital-art", condition: "digital", conditionLabel: "1-of-1 Original", media: "digital", category: "digital", badge: "1-of-1", img: "assets/digital/mint-state.webp", cert: "SNR-DIG-00002", edition: "1 of 1" },
   { name: "Copper Age Relic — 1-of-5", price: 19.00, type: "digital-art", condition: "digital", conditionLabel: "Limited Edition", media: "digital", category: "digital", badge: "1-of-5", img: "assets/digital/copper-age-relic.webp", cert: "SNR-DIG-00003", edition: "1 of 5" },
