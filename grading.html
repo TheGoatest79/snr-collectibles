@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Assisted Grading — S&R's Cards, Comics and Coins Oh-My!</title>
+<meta name="description" content="S&R's AI-assisted grading for cards, comics and coins. Step one on the road to S&R Gem Mint 10.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/logo-snr.png" alt="S and R's Cards, Comics and Coins Oh My logo">
+      <span class="brand-name">S&amp;R's Cards, Comics &amp; Coins<small>OH-MY!</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">☰</button>
+    <nav class="main-nav"><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">The Cabinet</a></li>
+      <li class="nav-cat"><a href="shop.html?type=trading-card">Cards</a></li>
+      <li class="nav-cat"><a href="shop.html?type=comic">Comics</a></li>
+      <li class="nav-cat"><a href="shop.html?type=coin">Coins</a></li>
+      <li class="nav-cat"><a href="shop.html?type=currency">Paper Money</a></li>
+      <li class="nav-cat"><a href="shop.html?type=collectible">Collectibles</a></li>
+      <li class="nav-cat"><a href="shop.html?type=antique">Antiques</a></li>
+      <li><a href="digital.html">Digital</a></li>
+      <li><a href="budget.html">Budget Bin</a></li>
+      <li><a href="consignment.html">Consignment</a></li>
+      <li><a href="auctions.html">Auctions</a></li>
+      <li><a href="sell.html">Sell</a></li>
+      <li><a href="grading.html" class="active">Grading</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <h1>🤖 AI-Assisted Grading</h1>
+    <p>AI grading and value estimate — subject to change.</p>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <div class="section-head"><h2>⚡ Quick Grade Check</h2></div>
+    <p class="lede">Answer four honest questions about your raw card and get an instant estimated grade. Free, no account needed. Rather have a real human eye on it? <a href="#scan">Send us photos</a> — that's how the pros do it.</p>
+    <div id="grader" class="grader-box">
+      <div class="grade-q" data-q="corners">
+        <h3>1. Corners</h3>
+        <label><input type="radio" name="corners" value="10"> Razor sharp, all four</label>
+        <label><input type="radio" name="corners" value="8"> Slightly soft on one or two</label>
+        <label><input type="radio" name="corners" value="6"> Visibly rounded</label>
+        <label><input type="radio" name="corners" value="4"> Bent, frayed, or damaged</label>
+      </div>
+      <div class="grade-q" data-q="edges">
+        <h3>2. Edges</h3>
+        <label><input type="radio" name="edges" value="10"> Clean all around</label>
+        <label><input type="radio" name="edges" value="8"> Minor whitening or nicks</label>
+        <label><input type="radio" name="edges" value="6"> Chipped or worn</label>
+        <label><input type="radio" name="edges" value="4"> Rough, chewed up</label>
+      </div>
+      <div class="grade-q" data-q="surface">
+        <h3>3. Surface (front &amp; back)</h3>
+        <label><input type="radio" name="surface" value="10"> Flawless, pack-fresh gloss</label>
+        <label><input type="radio" name="surface" value="8"> Light scratches or print lines</label>
+        <label><input type="radio" name="surface" value="6"> Crease, stain, or fading</label>
+        <label><input type="radio" name="surface" value="4"> Heavy wear, writing, or damage</label>
+      </div>
+      <div class="grade-q" data-q="centering">
+        <h3>4. Centering</h3>
+        <label><input type="radio" name="centering" value="10"> Dead even, 50/50</label>
+        <label><input type="radio" name="centering" value="8"> Slightly off, ~60/40</label>
+        <label><input type="radio" name="centering" value="6"> Noticeably off, ~70/30</label>
+        <label><input type="radio" name="centering" value="4"> Way off-center or miscut</label>
+      </div>
+      <div class="cta-row"><button class="btn" onclick="gradeCard()">Get My Estimate</button></div>
+      <div id="grade-result" class="grade-result" style="display:none"></div>
+    </div>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:12px">FREE grading estimate — NOT FINAL. This is a pre-grade estimate based on your answers, not an official grade. Subject to change when a real human puts eyes on it. Real grading is done in-hand, under light and magnification. When in doubt, <a href="#submit">submit it to us</a>.</p>
+  </div>
+</section>
+
+<section class="block" id="scan">
+  <div class="wrap">
+    <div class="section-head"><h2>📸 Scan It — Photo Grade Request</h2></div>
+    <p class="lede">Don't guess — show us. Snap front and back photos of your card, comic, or coin and a real person at S&amp;R gives you a professional estimated grade. No questionnaire, no robots guessing. We look at your actual item, up close.</p>
+    <div class="form-card">
+      <h2 style="font-size:1.4rem">Request a photo grade estimate</h2>
+      <p style="color:var(--muted); font-size:.9rem">Free. We reply with an honest estimated grade — usually within a couple of days. Your photos go straight to Sam &amp; Ryan and are never posted or shared.</p>
+      <form id="sr-grade-form">
+        <label for="pg-type">What is it?</label>
+        <select id="pg-type">
+          <option>Trading / sports card</option>
+          <option>Comic book</option>
+          <option>Coin / paper money</option>
+          <option>Other collectible</option>
+        </select>
+        <label for="pg-desc">Describe it (set, year, player/character, anything you know)</label>
+        <input id="pg-desc" placeholder="e.g. 1986 Fleer Michael Jordan #57">
+        <label for="pg-front">📷 Front photo <span style="color:var(--muted)">(required)</span></label>
+        <input id="pg-front" type="file" accept="image/*" capture="environment" required onchange="previewPhoto(this,'pg-front-prev')">
+        <img id="pg-front-prev" alt="" style="display:none;max-width:220px;margin-top:8px;border-radius:8px;border:1px solid var(--line)">
+        <label for="pg-back">📷 Back photo <span style="color:var(--muted)">(required)</span></label>
+        <input id="pg-back" type="file" accept="image/*" capture="environment" required onchange="previewPhoto(this,'pg-back-prev')">
+        <img id="pg-back-prev" alt="" style="display:none;max-width:220px;margin-top:8px;border-radius:8px;border:1px solid var(--line)">
+        <label for="pg-detail">🔍 Close-up photos <span style="color:var(--muted)">(optional — corners, edges, any flaw)</span></label>
+        <input id="pg-detail" type="file" accept="image/*" capture="environment" multiple onchange="previewMulti(this,'pg-detail-prev')">
+        <div id="pg-detail-prev" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"></div>
+        <label for="pg-name">Your name</label>
+        <input id="pg-name" required>
+        <label for="pg-email">Your email <span style="color:var(--muted)">(where we send the grade)</span></label>
+        <input id="pg-email" type="email" required>
+        <div style="margin-top:18px"><button class="btn" type="submit">Send Photos for Grade Estimate</button></div>
+        <div id="sr-g-msg"></div>
+      </form>
+      <p style="font-size:.85rem;color:var(--muted);margin-top:14px">📋 <strong>Photo tips:</strong> flat surface, good light, no glare or flash reflection. Fill the frame with the item and keep all four corners visible. For coins, both sides and the edge. The better the photo, the better the estimate.</p>
+      <p style="font-size:.85rem;color:var(--muted)">📝 <strong>Note:</strong> your photos upload straight to the S&amp;R grading desk — no email needed.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block alt" id="submit">
+  <div class="wrap">
+    <div class="section-head"><h2>📬 Submit Your Card for Grading</h2></div>
+    <p class="lede">Want the real thing? Mail your card to the vault. Sam &amp; Ryan grade every submission in-hand — centering measured, corners under magnification, surface under light — and it comes back with an official S&R grade.</p>
+    <div class="steps">
+      <div class="step"><h3>Request a submission</h3><p>Tell us what you're sending. We'll confirm and give you the vault address.</p></div>
+      <div class="step"><h3>Ship it safe</h3><p>Penny sleeve, toploader, team bag, bubble mailer. Protect the corners like they're made of gold.</p></div>
+      <div class="step"><h3>We grade it</h3><p>In-hand inspection under light and magnification. Honest grade, every time.</p></div>
+      <div class="step"><h3>It comes home</h3><p>Your card returns with its official S&R grade — the first slabs on the road to Gem Mint 10.</p></div>
+    </div>
+    <div class="section-head" style="margin-top:36px"><h2>Want a Real Grade?</h2></div>
+    <p class="lede">The AI scan above gives you a free estimate — subject to change when a real human puts eyes on it. For an official grade, submit your card to S&R — a real human grader examines it in-hand and gives you a certified grade in a sealed S&R slab. Contact us for a quote.</p>
+    <div class="cta-row" style="margin-top:8px">
+      <a class="btn" href="contact.html">Submit a Card for Grading</a>
+    </div>
+  </div>
+</section>
+
+<script>
+const GRADE_LABELS = {10:"GEM MINT",9:"MINT",8:"NM-MT",7:"NM",6:"EX-MT",5:"EX",4:"VG-EX",3:"VG",2:"GOOD",1:"POOR"};
+function gradeCard(){
+  const qs = ["corners","edges","surface","centering"];
+  let min = 10, answered = 0;
+  for(const q of qs){
+    const sel = document.querySelector('input[name="'+q+'"]:checked');
+    if(sel){ answered++; min = Math.min(min, parseInt(sel.value,10)); }
+  }
+  const box = document.getElementById("grade-result");
+  box.style.display = "block";
+  if(answered < 4){
+    box.innerHTML = "<h3>⚠️ Answer all four questions</h3><p>Be honest — the estimate is only as good as the answers.</p>";
+    return;
+  }
+  const label = GRADE_LABELS[min] || "POOR";
+  box.innerHTML = "<h3>Estimated grade: "+min+" — "+label+"</h3><p>"+
+    (min >= 9 ? "That's a beauty. Sleeve it, protect it, and consider submitting it for an official grade." :
+     min >= 7 ? "Solid copy. Worth protecting — a candidate for submission if the card has value." :
+     min >= 5 ? "Played condition. Fine for the collection or the Budget Bin, not a grading candidate." :
+     "Rough shape. It's a binder card — and there's no shame in binder cards.") +
+    "</p>";
+  box.scrollIntoView({behavior:"smooth", block:"center"});
+}
+function previewPhoto(input, imgId){
+  var img = document.getElementById(imgId);
+  if(input.files && input.files[0]){
+    var r = new FileReader();
+    r.onload = function(e){ img.src = e.target.result; img.style.display = "block"; };
+    r.readAsDataURL(input.files[0]);
+  } else { img.style.display = "none"; }
+}
+function previewMulti(input, divId){
+  var div = document.getElementById(divId);
+  div.innerHTML = "";
+  if(!input.files) return;
+  Array.prototype.forEach.call(input.files, function(f){
+    var r = new FileReader();
+    r.onload = function(e){
+      var img = document.createElement("img");
+      img.src = e.target.result;
+      img.style.cssText = "max-width:120px;border-radius:8px;border:1px solid var(--line)";
+      div.appendChild(img);
+    };
+    r.readAsDataURL(f);
+  });
+}
+/* Photo-grade requests now submit to the Supabase backend (grading_submissions
+   + grading-photos bucket) via js/grading.js. See SR.initGradingForm. */
+</script>
+
+<section class="block alt">
+  <div class="wrap">
+    <div class="section-head"><h2>The road to S&amp;R Gem Mint 10</h2></div>
+    <p class="lede">This is bigger than a tool. It's step one of the plan.</p>
+    <div class="steps">
+      <div class="step"><h3>AI pre-grading</h3><p>Instant, honest estimates for every collector and seller — free, right here in the vault. Subject to change when a human grades it.</p></div>
+      <div class="step"><h3>Human verification</h3><p>Sam &amp; Ryan review high-value pre-grades in-house, building the track record grade by grade.</p></div>
+      <div class="step"><h3>S&amp;R certified slabs</h3><p>The endgame: S&amp;R Gem Mint 10 slabs — a trusted grading name built in the open, one honest grade at a time.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><h4>Shop</h4><ul>
+        <li><a href="shop.html">The Cabinet</a></li>
+        <li><a href="digital.html">Digital Terminal</a></li>
+        <li><a href="budget.html">Budget Bin ($1–$5)</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+        <li><a href="sell.html">Sell With Us</a></li>
+      </ul></div>
+      <div><h4>Services</h4><ul>
+        <li><a href="grading.html">AI-Assisted Grading</a></li>
+        <li><a href="sell.html">We Buy, Sell & Trade</a></li>
+        <li><a href="auctions.html">30-Minute Auctions</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+      </ul></div>
+      <div><h4>S&amp;R</h4><ul>
+        <li><a href="about.html">About Sam &amp; Ryan</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html">Staff Login</a></li>
+      </ul></div>
+    </div>
+    <p class="fineprint">© 2026 S&amp;R's Cards, Comics and Coins Oh-My! — Sam &amp; Ryan. Cards. Comics. Coins. Collectibles. Digital Finds. Oh-My!</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/store.js"></script>
+<script src="js/grading.js"></script>
+<script>SR.initGradingForm();</script>
+</body>
+</html>

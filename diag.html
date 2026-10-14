@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Connection Test</title><style>body{font-family:sans-serif;padding:20px;background:#1a1a1a;color:#eee}h1{color:#f5c542}.ok{color:#7fc97f}.err{color:#e07b7b}pre{background:#222;padding:10px;border-radius:6px;overflow-x:auto;white-space:pre-wrap}</style></head>
+<body><h1>Connection Test</h1><div id="out"><p>Running tests...</p></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+async function run(){
+  var out = document.getElementById('out');
+  function log(msg, cls){ out.innerHTML += '<p class="'+(cls||'')+'">'+msg+'</p>'; }
+  function logPre(t){ out.innerHTML += '<pre>'+t+'</pre>'; }
+  var KEY = 'sb_publishable_4mJS0kMI_PB6eomxYpFCKQ_p3DAc2yx';
+  var BASE = 'https://ktcbdifealvinawzxoqc.supabase.co';
+
+  // Test 1: Is Supabase JS loaded?
+  log('Test 1: Supabase JS library...');
+  if (window.supabase && window.supabase.createClient) {
+    log('PASS: supabase-js loaded, createClient exists', 'ok');
+  } else {
+    log('FAIL: supabase-js NOT loaded or createClient missing', 'err');
+    log('window.supabase = ' + typeof window.supabase);
+    return;
+  }
+
+  // Test 2: Direct fetch to Supabase health (no auth) — simple GET, no preflight.
+  log('Test 2: Direct fetch to Supabase health endpoint (simple GET, no preflight)...');
+  try {
+    var r = await fetch(BASE + '/auth/v1/health');
+    log('PASS: fetch succeeded, status ' + r.status, 'ok');
+    var t = await r.text();
+    logPre('Response: ' + t.substring(0, 300));
+  } catch (e) {
+    log('FAIL: fetch threw: ' + e.name + ': ' + e.message, 'err');
+    logPre('Error: ' + e.toString() + '\nStack: ' + (e.stack || 'none'));
+    log('This is the core problem. Fetch from this page to Supabase fails.');
+    return;
+  }
+
+  // Test 3: Supabase client sign-in (dummy creds — expect "Invalid login credentials", NOT "Failed to fetch")
+  log('Test 3: Supabase client auth attempt (normal path — sends apikey/Authorization headers, triggers preflight)...');
+  try {
+    var sb = window.supabase.createClient(BASE, KEY);
+    var res = await sb.auth.signInWithPassword({ email: 'test@test.com', password: 'wrongpassword123' });
+    if (res.error) {
+      if (/failed to fetch|network|load failed/i.test(res.error.message || '')) {
+        log('FAIL: client got Failed to fetch — request never reached Supabase', 'err');
+      } else {
+        log('PASS: Got auth error (expected for wrong creds): ' + res.error.message, 'ok');
+        log('This means fetch works! The issue is elsewhere.');
+      }
+    } else {
+      log('UNEXPECTED: sign-in succeeded with wrong creds?', 'err');
+    }
+  } catch (e) {
+    log('FAIL: client threw: ' + e.name + ': ' + e.message, 'err');
+  }
+
+  // Test 4: Preflight-bypass — apikey in query string, NO custom headers, text/plain body.
+  // This is a CORS "simple request": no preflight. If this reaches the server (400/401 JSON),
+  // the preflight/headers path is the blocker and the fix is the Supabase Allowed Origins
+  // list or a preflight-free auth path. If this ALSO fails with Failed to fetch, the block
+  // is deeper than preflight.
+  log('Test 4: Preflight-bypass POST (apikey in URL, no custom headers, text/plain)...');
+  try {
+    var r4 = await fetch(BASE + '/auth/v1/token?grant_type=password&apikey=' + KEY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ email: 'test@test.com', password: 'wrongpassword123' })
+    });
+    var t4 = await r4.text();
+    log('Result: HTTP ' + r4.status + ' — reached server', 'ok');
+    logPre('Response: ' + t4.substring(0, 300));
+    if (r4.status === 400 && /invalid login|invalid grant/i.test(t4)) {
+      log('MEANING: Preflight/headers are the blocker. The server is fine — the browser preflight to /auth/v1/token is what fails. Fix = Supabase Dashboard Allowed Origins, or a preflight-free auth path.', 'ok');
+    }
+  } catch (e) {
+    log('FAIL: preflight-bypass also threw: ' + e.name + ': ' + e.message, 'err');
+    log('MEANING: Block is deeper than preflight — even a simple request fails from this origin.');
+  }
+
+  // Test 5: Explicit OPTIONS preflight probe — shows whether the preflight itself is answered.
+  log('Test 5: Explicit OPTIONS preflight probe...');
+  try {
+    var r5 = await fetch(BASE + '/auth/v1/token?grant_type=password', {
+      method: 'OPTIONS',
+      headers: {
+        'Origin': window.location.origin,
+        'Access-Control-Request-Method': 'POST',
+        'Access-Control-Request-Headers': 'content-type,apikey,authorization'
+      }
+    });
+    log('Result: OPTIONS HTTP ' + r5.status, 'ok');
+    logPre('Access-Control-Allow-Origin: ' + (r5.headers.get('access-control-allow-origin') || '(missing)') + '\nAccess-Control-Allow-Headers: ' + (r5.headers.get('access-control-allow-headers') || '(missing)'));
+    if (!r5.headers.get('access-control-allow-origin')) {
+      log('MEANING: Preflight answer has no Allow-Origin — add https://snr-collectibles.neocities.org to Supabase Dashboard > Project Settings > API > Allowed Origins (CORS).', 'err');
+    }
+  } catch (e) {
+    log('FAIL: OPTIONS threw: ' + e.name + ': ' + e.message, 'err');
+  }
+}
+run();
+</script></body></html>

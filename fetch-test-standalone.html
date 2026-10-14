@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fetch Test</title><style>body{font-family:sans-serif;padding:20px;background:#1a1a1a;color:#eee}h1{color:#f5c542}.ok{color:#7fc97f}.err{color:#e07b7b}button{padding:12px 24px;font-size:18px;background:#f5c542;border:none;border-radius:6px;cursor:pointer}</style></head>
+<body><h1>Fetch Test</h1><p>Tap the button to test if your phone can reach Supabase.</p><button onclick="test()">Test Fetch</button><div id="out"></div>
+<script>
+async function test(){
+  var out = document.getElementById('out');
+  out.innerHTML = '<p>Testing...</p>';
+  try {
+    var r = await fetch('https://ktcbdifealvinawzxoqc.supabase.co/auth/v1/health');
+    out.innerHTML = '<p class="ok">SUCCESS! Fetch works. Status: ' + r.status + '</p>';
+  } catch (e) {
+    out.innerHTML = '<p class="err">FAILED: ' + e.name + ': ' + e.message + '</p><p>This phone cannot fetch to Supabase.</p>';
+  }
+}
+</script></body></html>

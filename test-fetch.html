@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html><head><title>Fetch Test</title></head><body>
+<h1>Supabase Fetch Test</h1>
+<div id="result">Testing...</div>
+<script>
+async function test() {
+  const out = document.getElementById('result');
+  try {
+    out.innerHTML += '<p>1. Trying fetch to Supabase...</p>';
+    const r = await fetch('https://ktcbdifealvinawzxoqc.supabase.co/auth/v1/health', {
+      headers: { 'apikey': 'sb_publishable_4mJS0kMI_PB6eomxYpFCKQ_p3DAc2yx' }
+    });
+    out.innerHTML += '<p>2. Fetch succeeded! Status: ' + r.status + '</p>';
+    const t = await r.text();
+    out.innerHTML += '<p>3. Response: ' + t.substring(0, 200) + '</p>';
+  } catch (e) {
+    out.innerHTML += '<p style="color:red">FETCH FAILED: ' + e.name + ': ' + e.message + '</p>';
+    out.innerHTML += '<p>Error type: ' + e.constructor.name + '</p>';
+  }
+}
+test();
+</script>
+</body></html>

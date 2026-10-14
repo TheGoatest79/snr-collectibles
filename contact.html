@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — S&R's Cards, Comics and Coins Oh-My!</title>
+<meta name="description" content="Contact Sam & Ryan at S&R's Cards, Comics and Coins Oh-My!">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/logo-snr.png" alt="S and R's Cards, Comics and Coins Oh My logo">
+      <span class="brand-name">S&amp;R's Cards, Comics &amp; Coins<small>OH-MY!</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">☰</button>
+    <nav class="main-nav"><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">The Cabinet</a></li>
+      <li class="nav-cat"><a href="shop.html?type=trading-card">Cards</a></li>
+      <li class="nav-cat"><a href="shop.html?type=comic">Comics</a></li>
+      <li class="nav-cat"><a href="shop.html?type=coin">Coins</a></li>
+      <li class="nav-cat"><a href="shop.html?type=currency">Paper Money</a></li>
+      <li class="nav-cat"><a href="shop.html?type=collectible">Collectibles</a></li>
+      <li class="nav-cat"><a href="shop.html?type=antique">Antiques</a></li>
+      <li><a href="digital.html">Digital</a></li>
+      <li><a href="budget.html">Budget Bin</a></li>
+      <li><a href="consignment.html">Consignment</a></li>
+      <li><a href="auctions.html">Auctions</a></li>
+      <li><a href="sell.html">Sell</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Contact S&amp;R</h1>
+    <p>Hunting something specific? Want to sell or consign? Just want to talk cardboard? We answer everything ourselves.</p>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <!-- TO-DO (Ryan): replace ALL placeholder contact details below with real info before launch. -->
+    <div class="todo-note">📝 <strong>TO-DO (Ryan):</strong> every contact detail on this page is placeholder filler — swap in the real email, phone, and address before launch.</div>
+    <div class="feature-row" style="margin-bottom:28px">
+      <div class="feature">
+        <h3>📧 Email</h3>
+        <p>hello@srohmy.com<br><span style="font-size:.8rem">(placeholder — TO-DO)</span></p>
+      </div>
+      <div class="feature">
+        <h3>📞 Phone</h3>
+        <p>(555) 012-3456<br><span style="font-size:.8rem">(placeholder — TO-DO)</span></p>
+      </div>
+      <div class="feature">
+        <h3>📍 Shop</h3>
+        <p>123 Collector's Way<br>Vault District, USA<br><span style="font-size:.8rem">(placeholder — TO-DO)</span></p>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2 style="font-size:1.4rem">Send us a message</h2>
+      <p style="color:var(--muted); font-size:.9rem">Opens your email app with the message addressed to us.</p>
+      <form onsubmit="sendMail(event)">
+        <label for="c-name">Your name</label>
+        <input id="c-name" required>
+        <label for="c-subject">Subject</label>
+        <select id="c-subject">
+          <option>Hunting a specific find</option>
+          <option>Selling / consignment</option>
+          <option>Grading question</option>
+          <option>Something else</option>
+        </select>
+        <label for="c-msg">Message</label>
+        <textarea id="c-msg" rows="5" required></textarea>
+        <div style="margin-top:18px"><button class="btn" type="submit">Send Message</button></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><h4>Shop</h4><ul>
+        <li><a href="shop.html">The Cabinet</a></li>
+        <li><a href="digital.html">Digital Terminal</a></li>
+        <li><a href="budget.html">Budget Bin ($1–$5)</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+        <li><a href="sell.html">Sell With Us</a></li>
+      </ul></div>
+      <div><h4>Services</h4><ul>
+        <li><a href="grading.html">AI-Assisted Grading</a></li>
+        <li><a href="sell.html">We Buy, Sell & Trade</a></li>
+        <li><a href="auctions.html">30-Minute Auctions</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+      </ul></div>
+      <div><h4>S&amp;R</h4><ul>
+        <li><a href="about.html">About Sam &amp; Ryan</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html">Staff Login</a></li>
+      </ul></div>
+    </div>
+    <p class="fineprint">© 2026 S&amp;R's Cards, Comics and Coins Oh-My! — Sam &amp; Ryan. Cards. Comics. Coins. Collectibles. Digital Finds. Oh-My!</p>
+  </div>
+</footer>
+
+<script>
+function sendMail(e) {
+  e.preventDefault();
+  // TO-DO (Ryan): replace with the real contact email before launch.
+  var to = "hello@srohmy.com";
+  var subject = encodeURIComponent("[S&R] " + document.getElementById("c-subject").value);
+  var body = encodeURIComponent(document.getElementById("c-msg").value + "\n\n— " + document.getElementById("c-name").value);
+  window.location.href = "mailto:" + to + "?subject=" + subject + "&body=" + body;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30-Minute Auctions — S&R's Cards, Comics and Coins Oh-My!</title>
+<meta name="description" content="Lightning-fast 30-minute auctions on collectibles. Bid, win, done — S&R's flash auction floor.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/logo-snr.png" alt="S and R's Cards, Comics and Coins Oh My logo">
+      <span class="brand-name">S&amp;R's Cards, Comics &amp; Coins<small>OH-MY!</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">☰</button>
+    <nav class="main-nav"><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">The Cabinet</a></li>
+      <li class="nav-cat"><a href="shop.html?type=trading-card">Cards</a></li>
+      <li class="nav-cat"><a href="shop.html?type=comic">Comics</a></li>
+      <li class="nav-cat"><a href="shop.html?type=coin">Coins</a></li>
+      <li class="nav-cat"><a href="shop.html?type=currency">Paper Money</a></li>
+      <li class="nav-cat"><a href="shop.html?type=collectible">Collectibles</a></li>
+      <li class="nav-cat"><a href="shop.html?type=antique">Antiques</a></li>
+      <li><a href="digital.html">Digital</a></li>
+      <li><a href="budget.html">Budget Bin</a></li>
+      <li><a href="consignment.html">Consignment</a></li>
+      <li><a href="auctions.html" class="active">Auctions</a></li>
+      <li><a href="sell.html">Sell</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <h1>⚡ 30-Minute Auctions</h1>
+    <p>Lightning auctions on the S&R floor. Thirty minutes, no mercy — when the clock hits zero, the highest bid takes it home.</p>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <div class="section-head"><h2>How the flash floor works</h2></div>
+    <div class="feature-row">
+      <div class="feature">
+        <h3>⏱️ 30 minutes flat</h3>
+        <p>Every auction runs exactly half an hour. Short enough to stay exciting, long enough for a real bidding war. No week-long waits, no sniping at 3am.</p>
+      </div>
+      <div class="feature">
+        <h3>🔨 Live bidding</h3>
+        <p>Bid in real time against other collectors. Watch the price climb, jump in when your heart says jump. Highest bid when the clock dies wins.</p>
+      </div>
+      <div class="feature">
+        <h3>✅ S&R verified</h3>
+        <p>Every auction lot is hand-checked by Sam &amp; Ryan before it hits the floor. What you see is what ships — graded, described, and honest.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block alt">
+  <div class="wrap">
+    <div class="section-head"><h2>🔨 The live floor</h2></div>
+    <p class="lede">Real auctions, real bidding, 30 minutes on the clock. Sign in to throw your bid in the ring.</p>
+    <div id="auction-floor"></div>
+    <div class="cta-row" style="margin-top:20px">
+      <a class="btn" href="shop.html">Browse the Cabinet</a>
+      <a class="btn ghost" href="sell.html">Consign an Item</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><h4>Shop</h4><ul>
+        <li><a href="shop.html">The Cabinet</a></li>
+        <li><a href="digital.html">Digital Terminal</a></li>
+        <li><a href="budget.html">Budget Bin ($1–$5)</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+        <li><a href="sell.html">Sell With Us</a></li>
+      </ul></div>
+      <div><h4>Services</h4><ul>
+        <li><a href="grading.html">AI-Assisted Grading</a></li>
+        <li><a href="sell.html">We Buy, Sell &amp; Trade</a></li>
+        <li><a href="auctions.html">30-Minute Auctions</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+      </ul></div>
+      <div><h4>S&amp;R</h4><ul>
+        <li><a href="about.html">About Sam &amp; Ryan</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html">Staff Login</a></li>
+      </ul></div>
+    </div>
+    <p class="fineprint">© 2026 S&amp;R's Cards, Comics and Coins Oh-My! — Sam &amp; Ryan. Cards. Comics. Coins. Collectibles. Digital Finds. Oh-My!</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/store.js"></script>
+<script src="js/auctions.js"></script>
+<script>SR.initAuctions("auction-floor");</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget Bin ($1–$5) — S&R's Cards, Comics and Coins Oh-My!</title>
+<meta name="description" content="The Budget Bin: $1–$5 fillers and starter pieces for beginners building their first collection.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-category="budget">
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/logo-snr.png" alt="S and R's Cards, Comics and Coins Oh My logo">
+      <span class="brand-name">S&amp;R's Cards, Comics &amp; Coins<small>OH-MY!</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">☰</button>
+    <nav class="main-nav"><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">The Cabinet</a></li>
+      <li class="nav-cat"><a href="shop.html?type=trading-card">Cards</a></li>
+      <li class="nav-cat"><a href="shop.html?type=comic">Comics</a></li>
+      <li class="nav-cat"><a href="shop.html?type=coin">Coins</a></li>
+      <li class="nav-cat"><a href="shop.html?type=currency">Paper Money</a></li>
+      <li class="nav-cat"><a href="shop.html?type=collectible">Collectibles</a></li>
+      <li class="nav-cat"><a href="shop.html?type=antique">Antiques</a></li>
+      <li><a href="digital.html">Digital</a></li>
+      <li><a href="budget.html" class="active">Budget Bin</a></li>
+      <li><a href="sell.html">Sell</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <h1>💲 Budget Bin</h1>
+    <p>Everything $1–$5. Fillers for your sets, starter pieces for your first collection — every collector started with a single card. No gatekeeping, just the joy of the pull.</p>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <div class="filters">
+      <input type="search" id="f-search" placeholder="Search the bin…">
+      <label>Type</label>
+      <select id="f-type">
+        <option value="">All types</option>
+        <option value="trading-card">Trading cards</option>
+        <option value="comic">Comics</option>
+        <option value="coin">Coins</option>
+        <option value="collectible">Collectibles</option>
+      </select>
+      <label>Sort</label>
+      <select id="f-sort">
+        <option value="">Featured</option>
+        <option value="price-asc">Price: low to high</option>
+        <option value="price-desc">Price: high to low</option>
+        <option value="name">Name A–Z</option>
+      </select>
+      <input type="hidden" id="f-condition" value="">
+      <input type="hidden" id="f-media" value="">
+    </div>
+
+    <div class="product-grid" id="product-grid"></div>
+    <div class="empty-state" id="empty-state">
+      <div class="big">💲</div>
+      <h3>The bin is being filled</h3>
+      <p>Cheap thrills incoming. First-time collector? <a href="contact.html">Tell us what you're into</a> and we'll set aside starter picks for you.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><h4>Shop</h4><ul>
+        <li><a href="shop.html">The Cabinet</a></li>
+        <li><a href="digital.html">Digital Terminal</a></li>
+        <li><a href="budget.html">Budget Bin ($1–$5)</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+        <li><a href="sell.html">Sell With Us</a></li>
+      </ul></div>
+      <div><h4>Services</h4><ul>
+        <li><a href="grading.html">AI-Assisted Grading</a></li>
+        <li><a href="sell.html">We Buy, Sell & Trade</a></li>
+        <li><a href="auctions.html">30-Minute Auctions</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+      </ul></div>
+      <div><h4>S&amp;R</h4><ul>
+        <li><a href="about.html">About Sam &amp; Ryan</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html">Staff Login</a></li>
+      </ul></div>
+    </div>
+    <p class="fineprint">© 2026 S&amp;R's Cards, Comics and Coins Oh-My! — Sam &amp; Ryan. Cards. Comics. Coins. Collectibles. Digital Finds. Oh-My!</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/store.js"></script>
+<script>SR.initProductPage();</script>
+</body>
+</html>

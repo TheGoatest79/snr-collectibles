@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Terminal — S&R's Cards, Comics and Coins Oh-My!</title>
+<meta name="description" content="Instant digital downloads — authenticated digital art, 1-of-1 and limited editions. No shipping required.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-category="digital">
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/logo-snr.png" alt="S and R's Cards, Comics and Coins Oh My logo">
+      <span class="brand-name">S&amp;R's Cards, Comics &amp; Coins<small>OH-MY!</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">☰</button>
+    <nav class="main-nav"><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">The Cabinet</a></li>
+      <li class="nav-cat"><a href="shop.html?type=trading-card">Cards</a></li>
+      <li class="nav-cat"><a href="shop.html?type=comic">Comics</a></li>
+      <li class="nav-cat"><a href="shop.html?type=coin">Coins</a></li>
+      <li class="nav-cat"><a href="shop.html?type=currency">Paper Money</a></li>
+      <li class="nav-cat"><a href="shop.html?type=collectible">Collectibles</a></li>
+      <li class="nav-cat"><a href="shop.html?type=antique">Antiques</a></li>
+      <li><a href="digital.html" class="active">Digital</a></li>
+      <li><a href="budget.html">Budget Bin</a></li>
+      <li><a href="consignment.html">Consignment</a></li>
+      <li><a href="auctions.html">Auctions</a></li>
+      <li><a href="sell.html">Sell</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <h1>✨ Digital Terminal</h1>
+    <p>Instant digital downloads — artwork, eBooks, comics, posters and collectibles. No shipping required. Every piece ships with S&amp;R proof of authenticity: 1-of-1 originals and numbered limited editions (1-of-5 and more).</p>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <div class="todo-note">🔒 <strong>Authenticity:</strong> every digital find is logged with its edition proof (1-of-1, 1-of-5, …) before it can list. No proof, no listing.</div>
+    <div class="filters">
+      <input type="search" id="f-search" placeholder="Search digital finds…">
+      <label>Type</label>
+      <select id="f-type">
+        <option value="">All types</option>
+        <option value="digital-art">Digital art</option>
+        <option value="comic">Digital comics</option>
+        <option value="digital-book">Digital books</option>
+        <option value="collectible">Digital collectibles</option>
+      </select>
+      <label>Sort</label>
+      <select id="f-sort">
+        <option value="">Featured</option>
+        <option value="price-asc">Price: low to high</option>
+        <option value="price-desc">Price: high to low</option>
+        <option value="name">Name A–Z</option>
+      </select>
+      <input type="hidden" id="f-condition" value="">
+      <input type="hidden" id="f-media" value="">
+    </div>
+
+    <div class="product-grid" id="product-grid"></div>
+    <div class="empty-state" id="empty-state">
+      <div class="big">✨</div>
+      <h3>Digital drops incoming</h3>
+      <p>Authenticated digital art and limited editions are being prepared. The terminal lights up soon.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block alt">
+  <div class="wrap">
+    <div class="section-head"><h2>📜 Certificate of Authenticity</h2></div>
+    <p class="lede">Every digital find ships with a signed, numbered S&R Certificate of Authenticity. No certificate, no sale — that's the rule.</p>
+    <div class="cert-sample">
+      <div class="cert-inner">
+        <div class="cert-head">S&R's Cards, Comics &amp; Coins <span>OH-MY!</span></div>
+        <div class="cert-title">Certificate of Authenticity</div>
+        <div class="cert-body">
+          <p>This certifies that the digital artwork <strong>"[Artwork Title]"</strong> is an authentic S&R release.</p>
+          <table class="cert-table">
+            <tr><td>Edition</td><td><strong>1 of 5</strong> (this copy: #2)</td></tr>
+            <tr><td>Artist</td><td>[Artist name]</td></tr>
+            <tr><td>Released</td><td>[Date]</td></tr>
+            <tr><td>Certificate №</td><td>SNR-DIG-00042</td></tr>
+          </table>
+          <p class="cert-fine">Verified by Sam &amp; Ryan. This certificate travels with the artwork — keep it. It's what proves yours is real.</p>
+        </div>
+        <div class="cert-sign">Sam &amp; Ryan, S&R</div>
+      </div>
+    </div>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:12px;text-align:center">Sample shown. Every purchase generates a real certificate with the artwork's edition, number, and certificate ID.</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><h4>Shop</h4><ul>
+        <li><a href="shop.html">The Cabinet</a></li>
+        <li><a href="digital.html">Digital Terminal</a></li>
+        <li><a href="budget.html">Budget Bin ($1–$5)</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+        <li><a href="sell.html">Sell With Us</a></li>
+      </ul></div>
+      <div><h4>Services</h4><ul>
+        <li><a href="grading.html">AI-Assisted Grading</a></li>
+        <li><a href="sell.html">We Buy, Sell & Trade</a></li>
+        <li><a href="auctions.html">30-Minute Auctions</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+      </ul></div>
+      <div><h4>S&amp;R</h4><ul>
+        <li><a href="about.html">About Sam &amp; Ryan</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html">Staff Login</a></li>
+      </ul></div>
+    </div>
+    <p class="fineprint">© 2026 S&amp;R's Cards, Comics and Coins Oh-My! — Sam &amp; Ryan. Cards. Comics. Coins. Collectibles. Digital Finds. Oh-My!</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/store.js"></script>
+<script>SR.initProductPage();</script>
+</body>
+</html>
