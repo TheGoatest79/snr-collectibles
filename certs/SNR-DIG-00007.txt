@@ -1,0 +1,18 @@
+S&R's Cards, Comics & Coins OH-MY! — Certificate of Authenticity
+
+This certifies that the digital artwork "Voltfin" (a sleek electric eel-dolphin crackling with blue lightning) is an authentic
+S&R original release — 100% original creature design, no third-party IP.
+
+  Certificate №:  SNR-DIG-00007
+  Edition:        1 of 5  (limited edition — five copies will ever be issued)
+  Artwork file:   assets/cards/voltfin.webp
+  SHA-256:        3368437d8f65b47bac8dd788f60f0191602b7a408649cbbb517584ba33f27705
+  Artist:         Renix Jones / S&R Collectibles (original AI-assisted digital art)
+  Released:       2026-10-08
+  List price:     $20.00
+
+Verified by Sam & Ryan. This certificate travels with the artwork — keep it.
+It's what proves yours is real.
+
+HOW TO VERIFY: hash the artwork file with SHA-256 (any free tool) and compare
+it to the value above. A match proves the file is the certified original.
