@@ -120,7 +120,7 @@
         }).join("") + "</select>" +
         '<label for="sr-l-condition">Condition</label><input id="sr-l-condition" placeholder="e.g. Near Mint">' +
         '<label for="sr-l-media">Physical or digital *</label><select id="sr-l-media"><option value="physical">Physical</option><option value="digital">Digital</option></select>' +
-        '<label for="sr-l-cat">Shelf *</label><select id="sr-l-cat"><option value="cabinet">The Cabinet</option><option value="digital">Digital Terminal</option><option value="budget">Budget Bin ($1–$5)</option></select>' +
+        '<label for="sr-l-cat">Shelf *</label><select id="sr-l-cat"><option value="cabinet">The Cabinet</option><option value="digital">Digital Dungeon</option><option value="budget">Budget Bin ($1 and up)</option></select>' +
         '<label for="sr-l-badge">Badge <span style="color:var(--muted)">(optional — e.g. HOT, 1-of-1)</span></label><input id="sr-l-badge" placeholder="">' +
         '<label for="sr-l-photo">Photo *</label><input id="sr-l-photo" type="file" accept="image/*">' +
         '<div style="margin-top:18px"><button class="btn" id="sr-l-go">List it — free</button></div>' +
