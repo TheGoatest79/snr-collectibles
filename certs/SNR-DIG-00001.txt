@@ -1,0 +1,17 @@
+S&R's Cards, Comics & Coins OH-MY! — Certificate of Authenticity
+
+This certifies that the digital artwork "Vault Guardian" is an authentic S&R release.
+
+  Certificate №:  SNR-DIG-00001
+  Edition:        1 of 1  (1-of-1 original — no other copies will ever be issued)
+  Artwork file:   assets/digital/vault-guardian.webp
+  SHA-256:        41a0a013d9e499056c7222dd26d8c7a9db7407094fc560586438a7dc809046f6
+  Artist:         Renix Jones / S&R Collectibles (original AI-assisted digital art)
+  Released:       2026-10-07
+  List price:     $49.00
+
+Verified by Sam & Ryan. This certificate travels with the artwork — keep it.
+It's what proves yours is real.
+
+HOW TO VERIFY: hash the artwork file with SHA-256 (any free tool) and compare
+it to the value above. A match proves the file is the certified original.
