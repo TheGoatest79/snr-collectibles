@@ -65,21 +65,22 @@
 
     <div class="form-card">
       <h2 style="font-size:1.4rem">Send us a message</h2>
-      <p style="color:var(--muted); font-size:.9rem">Opens your email app with the message addressed to us.</p>
-      <form onsubmit="sendMail(event)">
-        <label for="c-name">Your name</label>
-        <input id="c-name" required>
-        <label for="c-subject">Subject</label>
-        <select id="c-subject">
-          <option>Hunting a specific find</option>
-          <option>Selling / consignment</option>
-          <option>Grading question</option>
-          <option>Something else</option>
-        </select>
-        <label for="c-msg">Message</label>
-        <textarea id="c-msg" rows="5" required></textarea>
-        <div style="margin-top:18px"><button class="btn" type="submit">Send Message</button></div>
-      </form>
+      <p style="color:var(--muted); font-size:.9rem">Goes straight to Sam &amp; Ryan. We read everything ourselves and answer every message.</p>
+      <label for="c-name">Your name *</label>
+      <input id="c-name" placeholder="Your name">
+      <label for="c-email">Your email *</label>
+      <input id="c-email" type="email" placeholder="you@example.com">
+      <label for="c-subject">Subject</label>
+      <select id="c-subject">
+        <option>Hunting a specific find</option>
+        <option>Selling / consignment</option>
+        <option>Grading question</option>
+        <option>Something else</option>
+      </select>
+      <label for="c-msg">Message *</label>
+      <textarea id="c-msg" rows="5"></textarea>
+      <div style="margin-top:18px"><button class="btn" id="c-go">Send Message</button></div>
+      <div id="c-status"></div>
     </div>
   </div>
 </section>
@@ -110,15 +111,31 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/store.js"></script>
 <script>
-function sendMail(e) {
-  e.preventDefault();
-  // TO-DO (Ryan): replace with the real contact email before launch.
-  var to = "hello@srohmy.com";
-  var subject = encodeURIComponent("[S&R] " + document.getElementById("c-subject").value);
-  var body = encodeURIComponent(document.getElementById("c-msg").value + "\n\n— " + document.getElementById("c-name").value);
-  window.location.href = "mailto:" + to + "?subject=" + subject + "&body=" + body;
-}
+document.getElementById("c-go").onclick = async function () {
+  var st = document.getElementById("c-status");
+  var name = document.getElementById("c-name").value.trim();
+  var email = document.getElementById("c-email").value.trim();
+  var subject = document.getElementById("c-subject").value;
+  var message = document.getElementById("c-msg").value.trim();
+  if (!name || !email || email.indexOf("@") < 0 || !message) { SR.note(st, "Fill in your name, a valid email, and your message.", "err"); return; }
+  if (!SR.isConfigured()) { SR.note(st, "⚠️ Store backend isn't configured.", "err"); return; }
+  var sb = SR.db();
+  var t = await sb.from("dm_threads").insert({ name: name, email: email, subject: subject, status: "open" }).select("id").single();
+  if (t.error) { SR.note(st, "⚠️ " + SR.esc(t.error.message), "err"); return; }
+  var m = await sb.from("dm_messages").insert({ thread_id: t.data.id, sender: "customer", body: message });
+  if (m.error) { SR.note(st, "⚠️ " + SR.esc(m.error.message), "err"); return; }
+  var link = location.href.replace(/contact\.html.*$/, "") + "messages.html?t=" + t.data.id;
+  st.innerHTML = '<div class="todo-note" style="border-color:var(--gold)">' +
+    "<strong>✅ Message sent.</strong> We'll reply here — <strong>bookmark this private link</strong> to see our answer and write back:<br>" +
+    '<a href="' + link + '">' + SR.esc(link) + "</a></div>";
+  document.getElementById("c-name").value = "";
+  document.getElementById("c-email").value = "";
+  document.getElementById("c-msg").value = "";
+};
 </script>
 </body>
 </html>

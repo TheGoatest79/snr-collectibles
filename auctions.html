@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>30-Minute Auctions — S&R's Cards, Comics and Coins Oh-My!</title>
+<title>Auction Alley — S&R's Cards, Comics and Coins Oh-My!</title>
 <meta name="description" content="Lightning-fast 30-minute auctions on collectibles. Bid, win, done — S&R's flash auction floor.">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -39,7 +39,7 @@
 
 <div class="page-hero">
   <div class="wrap">
-    <h1>⚡ 30-Minute Auctions</h1>
+    <h1>⚡ Auction Alley</h1>
     <p>Lightning auctions on the S&R floor. Thirty minutes, no mercy — when the clock hits zero, the highest bid takes it home.</p>
   </div>
 </div>
@@ -76,6 +76,19 @@
   </div>
 </section>
 
+<section class="block">
+  <div class="wrap">
+    <div class="section-head"><h2>🔔 Never miss a drop</h2></div>
+    <p class="lede">Alley auctions run fast and end faster. Drop your email and we'll ping you when a new one goes live.</p>
+    <div class="form-card" style="max-width:480px">
+      <label for="sr-al-email">Email *</label>
+      <input id="sr-al-email" type="email" placeholder="you@example.com">
+      <div style="margin-top:14px"><button class="btn" id="sr-al-go">Sign up for auction alerts</button></div>
+      <div id="sr-al-msg"></div>
+    </div>
+  </div>
+</section>
+
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
@@ -106,6 +119,6 @@
 <script src="js/config.js"></script>
 <script src="js/store.js"></script>
 <script src="js/auctions.js"></script>
-<script>SR.initAuctions("auction-floor");</script>
+<script>SR.initAuctions("auction-floor"); SR.initAuctionAlerts();</script>
 </body>
 </html>

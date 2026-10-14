@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Messages — S&R's Cards, Comics and Coins Oh-My!</title>
+<meta name="description" content="Your private message thread with Sam & Ryan at S&R Collectibles.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="assets/logo-snr.png" alt="S and R's Cards, Comics, Coins Oh My logo">
+      <span class="brand-name">S&amp;R's Cards, Comics &amp; Coins<small>OH-MY!</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">☰</button>
+    <nav class="main-nav"><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">The Cabinet</a></li>
+      <li><a href="digital.html">Digital</a></li>
+      <li><a href="budget.html">Budget Bin</a></li>
+      <li><a href="consignment.html">Consignment</a></li>
+      <li><a href="auctions.html">Auction Alley</a></li>
+      <li><a href="sell.html">Sell</a></li>
+      <li><a href="grading.html">Grading</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <h1>💬 My Messages</h1>
+    <p>Your private thread with Sam &amp; Ryan. We reply ourselves — no bots, no ticket queues.</p>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <div id="sr-dm-wrap"><p>Loading your messages…</p></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><h4>Shop</h4><ul>
+        <li><a href="shop.html">The Cabinet</a></li>
+        <li><a href="digital.html">Digital Dungeon</a></li>
+        <li><a href="budget.html">Budget Bin ($1 and up)</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+        <li><a href="sell.html">Sell With Us</a></li>
+      </ul></div>
+      <div><h4>Services</h4><ul>
+        <li><a href="grading.html">AI-Assisted Grading</a></li>
+        <li><a href="sell.html">We Buy, Sell &amp; Trade</a></li>
+        <li><a href="auctions.html">Auction Alley</a></li>
+        <li><a href="consignment.html">Consignment Corner</a></li>
+      </ul></div>
+      <div><h4>S&amp;R</h4><ul>
+        <li><a href="about.html">About Sam &amp; Ryan</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html">Staff Login</a></li>
+      </ul></div>
+    </div>
+    <p class="fineprint">© 2026 S&amp;R's Cards, Comics and Coins Oh-My! — Sam &amp; Ryan. Cards. Comics. Coins. Collectibles. Digital Finds. Oh-My!</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/store.js"></script>
+<script>
+(function () {
+  var wrap = document.getElementById("sr-dm-wrap");
+  var tid = new URLSearchParams(location.search).get("t");
+
+  if (!tid) {
+    wrap.innerHTML =
+      '<div class="form-card" style="max-width:520px">' +
+      "<h2 style='font-size:1.3rem'>Find your conversation</h2>" +
+      '<p style="color:var(--muted);font-size:.9rem">Paste the private message link we gave you when you contacted us.</p>' +
+      '<input id="sr-dm-link" placeholder="Paste your message link here">' +
+      '<div style="margin-top:14px"><button class="btn" id="sr-dm-open">Open my messages</button></div>' +
+      '<p style="margin-top:14px;font-size:.9rem">No link yet? <a href="contact.html">Send us a message</a> first.</p></div>';
+    document.getElementById("sr-dm-open").onclick = function () {
+      var v = document.getElementById("sr-dm-link").value.trim();
+      var m = v.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i);
+      if (!m) { SR.note(wrap, "That doesn't look like a message link.", "err"); return; }
+      location.href = "messages.html?t=" + m[0];
+    };
+    return;
+  }
+
+  if (!SR.isConfigured()) { wrap.innerHTML = "<p>⚠️ Store backend isn't configured.</p>"; return; }
+  var sb = SR.db();
+
+  async function load() {
+    var t = await sb.from("dm_threads").select("*").eq("id", tid).single();
+    if (t.error || !t.data) { wrap.innerHTML = "<p>⚠️ Couldn't find that conversation. Check your link or <a href='contact.html'>start a new one</a>.</p>"; return; }
+    var thread = t.data;
+    var m = await sb.from("dm_messages").select("*").eq("thread_id", tid).order("created_at", { ascending: true });
+    var msgs = (m.data || []).map(function (x) {
+      var mine = x.sender === "customer";
+      return '<div style="margin-bottom:12px;padding:10px 14px;border-radius:10px;' +
+        (mine ? "background:var(--panel);margin-left:12%" : "background:#2a2118;border:1px solid var(--gold);margin-right:12%") + '">' +
+        '<p style="font-size:.75rem;color:var(--muted);margin:0 0 6px">' +
+        (mine ? "You" : "Sam &amp; Ryan") + " · " + new Date(x.created_at).toLocaleString() + "</p>" +
+        '<p style="white-space:pre-wrap;margin:0">' + SR.esc(x.body) + "</p></div>";
+    }).join("");
+
+    wrap.innerHTML =
+      "<h2 style='font-size:1.3rem'>" + SR.esc(thread.subject || "Conversation") + "</h2>" +
+      '<p style="font-size:.85rem;color:var(--muted)">' + SR.esc(thread.name) + " · " + SR.esc(thread.email) +
+      ' · <strong>' + SR.esc(thread.status) + "</strong></p>" +
+      '<div id="sr-dm-list" style="margin:18px 0;max-width:640px">' + (msgs || "<p>No messages yet.</p>") + "</div>" +
+      (thread.status === "open"
+        ? '<div class="form-card" style="max-width:640px"><label for="sr-dm-reply">Write back</label>' +
+          '<textarea id="sr-dm-reply" rows="3" style="width:100%;box-sizing:border-box"></textarea>' +
+          '<div style="margin-top:12px"><button class="btn" id="sr-dm-send">Send reply</button></div>' +
+          '<div id="sr-dm-msg"></div></div>'
+        : '<p class="todo-note">This conversation is closed. <a href="contact.html">Start a new one</a> any time.</p>');
+
+    var send = document.getElementById("sr-dm-send");
+    if (send) send.onclick = async function () {
+      var st = document.getElementById("sr-dm-msg");
+      var body = document.getElementById("sr-dm-reply").value.trim();
+      if (!body) { SR.note(st, "Write your reply first.", "err"); return; }
+      var ins = await sb.from("dm_messages").insert({ thread_id: tid, sender: "customer", body: body });
+      if (ins.error) { SR.note(st, "⚠️ " + SR.esc(ins.error.message), "err"); return; }
+      await sb.from("dm_threads").update({ updated_at: new Date().toISOString() }).eq("id", tid);
+      load();
+    };
+  }
+  load();
+})();
+</script>
+</body>
+</html>
