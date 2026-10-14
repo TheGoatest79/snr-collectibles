@@ -1,0 +1,20 @@
+S&R's Cards, Comics & Coins OH-MY! — Certificate of Authenticity
+
+This certifies that the digital artwork "Bronze Vault" is an authentic S&R release.
+
+  Certificate №:  SNR-DIG-00005
+  Edition:        1 of 5  (limited edition — at most 5 numbered copies will ever be sold)
+  Artwork file:   assets/digital/bronze-vault.webp
+  SHA-256:        961b0d9e4b2782e21e4c8b8ada5a10adc382bd726518a1d208ce4a3e0ea51c20
+  Artist:         Renix Jones / S&R Collectibles (original AI-assisted digital art)
+  Released:       2026-10-07
+  List price:     $15.00
+
+Individual copy numbers (SNR-DIG-00005-1 through -5) are assigned at sale time
+and recorded in the edition registry (certs/manifest.json).
+
+Verified by Sam & Ryan. This certificate travels with the artwork — keep it.
+It's what proves yours is real.
+
+HOW TO VERIFY: hash the artwork file with SHA-256 (any free tool) and compare
+it to the value above. A match proves the file is the certified original.
