@@ -257,4 +257,23 @@
 
     load();
   };
+
+  /* ---- auction alert signup ------------------------------------------------ */
+  SR.initAuctionAlerts = function () {
+    var go = document.getElementById("sr-al-go");
+    if (!go) return;
+    go.onclick = async function () {
+      var msg = document.getElementById("sr-al-msg");
+      var email = document.getElementById("sr-al-email").value.trim();
+      if (!email || email.indexOf("@") < 0) { SR.note(msg, "Enter a valid email.", "err"); return; }
+      var sb = SR.db();
+      var ins = await sb.from("auction_alerts").insert({ email: email });
+      if (ins.error) {
+        if (/duplicate|unique/i.test(ins.error.message || "")) { SR.note(msg, "✅ You're already on the list.", "ok"); return; }
+        SR.note(msg, "⚠️ " + SR.esc(ins.error.message), "err"); return;
+      }
+      SR.note(msg, "✅ You're in. We'll ping you when auctions drop.", "ok");
+      document.getElementById("sr-al-email").value = "";
+    };
+  };
 })();

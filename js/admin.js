@@ -69,6 +69,7 @@
         '<button class="btn ghost" data-tab="sellers">👥 Sellers</button>' +
         '<button class="btn ghost" data-tab="pricing">💲 Pricing</button>' +
         '<button class="btn ghost" data-tab="notes">📝 Notes for Cog</button>' +
+        '<button class="btn ghost" data-tab="messages">💬 Messages</button>' +
         '<button class="btn ghost" id="sr-ad-out" style="margin-left:auto">Sign out</button></div>' +
         '<div id="sr-ad-body"></div>';
       document.getElementById("sr-ad-out").onclick = SR.signOutDirect;
@@ -77,7 +78,7 @@
         b.onclick = function () {
           dash.querySelectorAll("[data-tab]").forEach(function (x) { x.className = "btn ghost"; });
           b.className = "btn";
-          ({ products: tabProducts, auctions: tabAuctions, grading: tabGrading, sellers: tabSellers, pricing: tabPricing, notes: tabNotes })[b.getAttribute("data-tab")](body);
+          ({ products: tabProducts, auctions: tabAuctions, grading: tabGrading, sellers: tabSellers, pricing: tabPricing, notes: tabNotes, messages: tabMessages })[b.getAttribute("data-tab")](body);
         };
       });
       tabProducts(body);
@@ -319,6 +320,82 @@
         }).join("");
       }
       loadNotes();
+    }
+
+    /* ---- customer direct messages ---------------------------------------- */
+    async function tabMessages(body) {
+      var sb = SR.dbDirect();
+      body.innerHTML =
+        "<h3>💬 Customer messages</h3>" +
+        '<p style="color:var(--muted);font-size:.9rem">Direct message threads from customers and sellers. Click a thread to read and reply.</p>' +
+        '<div id="sr-dm-list"><p>Loading threads…</p></div>' +
+        '<div id="sr-dm-open"></div>';
+
+      async function loadThreads() {
+        var list = document.getElementById("sr-dm-list");
+        var res = await sb.from("dm_threads").select("*").order("updated_at", { ascending: false }).limit(50);
+        if (res.error) { list.innerHTML = "<p>⚠️ " + SR.esc(res.error.message) + "</p>"; return; }
+        var threads = res.data || [];
+        if (!threads.length) { list.innerHTML = "<p>No message threads yet.</p>"; return; }
+        list.innerHTML = threads.map(function (t) {
+          return '<div class="form-card" style="margin-bottom:10px;cursor:pointer" data-thread="' + t.id + '">' +
+            '<p style="margin:0"><strong>' + SR.esc(t.subject || "Conversation") + "</strong> " +
+            '<span style="font-size:.75rem;color:var(--muted)">' + SR.esc(t.status) + "</span></p>" +
+            '<p style="font-size:.8rem;color:var(--muted);margin:6px 0 0">' + SR.esc(t.name) + " · " + SR.esc(t.email) +
+            " · " + new Date(t.updated_at).toLocaleString() + "</p></div>";
+        }).join("");
+        list.querySelectorAll("[data-thread]").forEach(function (el) {
+          el.onclick = function () { openThread(el.getAttribute("data-thread")); };
+        });
+      }
+
+      async function openThread(tid) {
+        var open = document.getElementById("sr-dm-open");
+        var t = await sb.from("dm_threads").select("*").eq("id", tid).single();
+        var m = await sb.from("dm_messages").select("*").eq("thread_id", tid).order("created_at", { ascending: true });
+        var thread = t.data || {};
+        var msgs = (m.data || []).map(function (x) {
+          var cust = x.sender === "customer";
+          return '<div style="margin-bottom:10px;padding:10px 14px;border-radius:10px;' +
+            (cust ? "background:var(--panel)" : "background:#2a2118;border:1px solid var(--gold)") + '">' +
+            '<p style="font-size:.75rem;color:var(--muted);margin:0 0 6px">' +
+            (cust ? SR.esc(thread.name || "Customer") : "Staff") + " · " + new Date(x.created_at).toLocaleString() + "</p>" +
+            '<p style="white-space:pre-wrap;margin:0">' + SR.esc(x.body) + "</p></div>";
+        }).join("");
+        open.innerHTML =
+          "<hr><h3>" + SR.esc(thread.subject || "Conversation") + "</h3>" +
+          '<p style="font-size:.85rem;color:var(--muted)">' + SR.esc(thread.name || "") + " · " + SR.esc(thread.email || "") +
+          ' · <strong>' + SR.esc(thread.status || "") + "</strong></p>" +
+          '<div style="max-width:640px">' + (msgs || "<p>No messages yet.</p>") + "</div>" +
+          (thread.status === "open"
+            ? '<div class="form-card" style="max-width:640px"><label>Reply as staff</label>' +
+              '<textarea id="sr-dm-staff-reply" rows="3" style="width:100%;box-sizing:border-box"></textarea>' +
+              '<div style="margin-top:12px"><button class="btn" id="sr-dm-staff-send">Send reply</button> ' +
+              '<button class="btn ghost" id="sr-dm-close">Close thread</button></div>' +
+              '<div id="sr-dm-staff-msg"></div></div>'
+            : '<div style="margin-top:12px"><button class="btn ghost" id="sr-dm-reopen">Reopen thread</button></div>');
+        var send = document.getElementById("sr-dm-staff-send");
+        if (send) send.onclick = async function () {
+          var st = document.getElementById("sr-dm-staff-msg");
+          var txt = document.getElementById("sr-dm-staff-reply").value.trim();
+          if (!txt) { SR.note(st, "Write the reply first.", "err"); return; }
+          var ins = await sb.from("dm_messages").insert({ thread_id: tid, sender: "staff", body: txt });
+          if (ins.error) { SR.note(st, "⚠️ " + SR.esc(ins.error.message), "err"); return; }
+          await sb.from("dm_threads").update({ updated_at: new Date().toISOString() }).eq("id", tid);
+          openThread(tid); loadThreads();
+        };
+        var close = document.getElementById("sr-dm-close");
+        if (close) close.onclick = async function () {
+          await sb.from("dm_threads").update({ status: "closed", updated_at: new Date().toISOString() }).eq("id", tid);
+          openThread(tid); loadThreads();
+        };
+        var reopen = document.getElementById("sr-dm-reopen");
+        if (reopen) reopen.onclick = async function () {
+          await sb.from("dm_threads").update({ status: "open", updated_at: new Date().toISOString() }).eq("id", tid);
+          openThread(tid); loadThreads();
+        };
+      }
+      loadThreads();
     }
   };
 })();
