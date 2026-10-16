@@ -64,6 +64,7 @@
       dash.innerHTML =
         '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">' +
         '<button class="btn" data-tab="products">📦 Products</button>' +
+        '<button class="btn ghost" data-tab="vault">🔐 Consignment Vault</button>' +
         '<button class="btn ghost" data-tab="auctions">⚡ Auctions</button>' +
         '<button class="btn ghost" data-tab="grading">🤖 Grading queue</button>' +
         '<button class="btn ghost" data-tab="sellers">👥 Sellers</button>' +
@@ -78,7 +79,7 @@
         b.onclick = function () {
           dash.querySelectorAll("[data-tab]").forEach(function (x) { x.className = "btn ghost"; });
           b.className = "btn";
-          ({ products: tabProducts, auctions: tabAuctions, grading: tabGrading, sellers: tabSellers, pricing: tabPricing, notes: tabNotes, messages: tabMessages })[b.getAttribute("data-tab")](body);
+          ({ products: tabProducts, vault: tabVault, auctions: tabAuctions, grading: tabGrading, sellers: tabSellers, pricing: tabPricing, notes: tabNotes, messages: tabMessages })[b.getAttribute("data-tab")](body);
         };
       });
       tabProducts(body);
@@ -129,6 +130,84 @@
       body.querySelectorAll("[data-p-sold]").forEach(function (b) { b.onclick = function () { setStatus(b.getAttribute("data-p-sold"), "sold"); }; });
       body.querySelectorAll("[data-p-rem]").forEach(function (b) { b.onclick = function () { setStatus(b.getAttribute("data-p-rem"), "removed"); }; });
       body.querySelectorAll("[data-p-act]").forEach(function (b) { b.onclick = function () { setStatus(b.getAttribute("data-p-act"), "active"); }; });
+    }
+
+    /* ---- consignment vault (staff only) ------------------------------------- */
+    async function tabVault(body) {
+      body.innerHTML = "<p>Loading Consignment Vault…</p>";
+      var res = await sb.from("products").select("*").eq("category", "vault").order("created_at", { ascending: false }).limit(200);
+      if (res.error) { body.innerHTML = "<p>⚠️ " + SR.esc(res.error.message) + "</p>"; return; }
+      var items = res.data || [];
+      var rows = items.map(function (p) {
+        var acts = "";
+        if (p.status === "active")
+          acts =
+            '<button class="btn ghost" style="padding:4px 10px;font-size:.78rem" data-v-sold="' + p.id + '">Sold</button> ' +
+            '<button class="btn ghost" style="padding:4px 10px;font-size:.78rem" data-v-rem="' + p.id + '">Remove</button> ' +
+            '<button class="btn ghost" style="padding:4px 10px;font-size:.78rem" data-v-price="' + p.id + '" data-v-cur="' + p.price + '">Set price</button>';
+        else if (p.status === "removed")
+          acts = '<button class="btn ghost" style="padding:4px 10px;font-size:.78rem" data-v-act="' + p.id + '">Re-activate</button>';
+        else
+          acts = '<span style="color:var(--muted)">—</span>';
+        return [
+          p.img_url ? '<img src="' + SR.esc(p.img_url) + '" style="width:44px;height:44px;object-fit:cover;border-radius:6px">' : "—",
+          "<strong>" + SR.esc(p.name) + "</strong><br><span style='color:var(--muted)'>" + SR.esc(p.type || "") + " · " + SR.esc(p.condition || "") + "</span>",
+          SR.money(p.price),
+          SR.esc(p.status),
+          acts
+        ];
+      });
+      body.innerHTML =
+        "<h3>🔐 Consignment Vault (" + items.length + ")</h3>" +
+        '<p style="color:var(--muted);font-size:.9rem">Staff only. Items here are NOT visible on the public site. Price them, then move to the Cabinet when ready to list.</p>' +
+        '<div class="form-card" style="margin-bottom:24px;max-width:640px">' +
+        "<h4>Add to Vault</h4>" +
+        '<label>Item name *</label><input id="sr-v-name" placeholder="e.g. 1996-97 Topps Chrome #138 Kobe Bryant">' +
+        '<label>Price (USD) *</label><input id="sr-v-price" type="number" min="0" step="0.01" placeholder="0.00">' +
+        '<label>Type</label><input id="sr-v-type" placeholder="trading-card, comic, coin…">' +
+        '<label>Condition</label><input id="sr-v-cond" placeholder="e.g. NM-MT">' +
+        '<label>Photo URL</label><input id="sr-v-img" placeholder="https://…">' +
+        '<label>Consignor <span style="color:var(--muted)">(who owns it)</span></label><input id="sr-v-seller" placeholder="e.g. Ryan, or customer name">' +
+        '<div style="margin-top:14px"><button class="btn" id="sr-v-add">Add to Vault</button></div>' +
+        '<div id="sr-v-msg"></div></div>' +
+        (rows.length ? table(rows, ["", "Item", "Price", "Status", "Actions"]) : "<p>Vault's empty. Add the first consignment piece above.</p>");
+
+      document.getElementById("sr-v-add").onclick = async function () {
+        var msg = document.getElementById("sr-v-msg");
+        var name = document.getElementById("sr-v-name").value.trim();
+        var price = Number(document.getElementById("sr-v-price").value);
+        if (!name || !isFinite(price) || price < 0) { SR.note(msg, "Name and price are required.", "err"); return; }
+        var ins = await sb.from("products").insert({
+          name: name,
+          price: price,
+          type: document.getElementById("sr-v-type").value.trim() || null,
+          condition: document.getElementById("sr-v-cond").value.trim() || null,
+          img_url: document.getElementById("sr-v-img").value.trim() || null,
+          category: "vault",
+          media: "physical",
+          status: "active"
+        });
+        if (ins.error) { SR.note(msg, "⚠️ " + SR.esc(ins.error.message), "err"); return; }
+        SR.note(msg, "✅ Added to the Vault.", "ok");
+        tabVault(body);
+      };
+
+      async function setStatus(id, status) {
+        await sb.from("products").update({ status: status }).eq("id", id);
+        tabVault(body);
+      }
+      async function setPrice(id, cur) {
+        var np = prompt("New price (USD):", cur);
+        if (np === null) return;
+        np = Number(np);
+        if (!isFinite(np) || np < 0) { alert("Enter a valid price."); return; }
+        await sb.from("products").update({ price: np }).eq("id", id);
+        tabVault(body);
+      }
+      body.querySelectorAll("[data-v-sold]").forEach(function (b) { b.onclick = function () { setStatus(b.getAttribute("data-v-sold"), "sold"); }; });
+      body.querySelectorAll("[data-v-rem]").forEach(function (b) { b.onclick = function () { setStatus(b.getAttribute("data-v-rem"), "removed"); }; });
+      body.querySelectorAll("[data-v-act]").forEach(function (b) { b.onclick = function () { setStatus(b.getAttribute("data-v-act"), "active"); }; });
+      body.querySelectorAll("[data-v-price]").forEach(function (b) { b.onclick = function () { setPrice(b.getAttribute("data-v-price"), b.getAttribute("data-v-cur")); }; });
     }
 
     /* ---- auctions --------------------------------------------------------- */
